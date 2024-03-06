@@ -1,0 +1,24 @@
+public class Aaa {
+
+	public static void main(String[] args) {
+
+		int arr[] = new int[]{7,6,4,9,3}; //배열
+		
+		//1과 0을 비교한다
+		//2와 1을 비교하고 1과 0을 비교한다
+		//3과 2를 비교하고 2와1을 비교하고 1과 0을 비교한다
+		//반복하는 반복문생성
+		for (int i = 1; i < arr.length; i++) {
+			for (int j = i; j > 0; j--) {
+				
+				if (arr[j-1] > arr[j]) {
+					int temp = arr[j-1];
+					arr[j-1] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+		System.out.println(Arrays.toString(arr)); //출력
+	}
+
+}
