@@ -1,0 +1,28 @@
+1
+select last_name, salary
+from employees
+where salary >= 12000;
+2
+select last_name, department_id
+from employees
+where employee_id = 176;
+3
+select last_name, salary
+from employees
+where salary >= 5000 and salary <=12000;
+4
+select last_name,employee_id,hire_date
+from employees
+where hire_date >= '2002/02/20' and hire_date <= '2008/05/01';
+5
+select last_name, department_id
+from employees
+where department_id = 20 or department_id = 50 order by last_name asc;
+6
+select last_name, salary
+from employees
+where department_id in(20,50) and salary between 5000 and 12000;
+7
+select last_name, hire_date
+from employees
+where hire_date like '04%';
