@@ -1,28 +1,28 @@
-1
+1 연봉이 12000 이상되는 직원들의 LAST_NAME 및 연봉을 조회한다.
 select last_name, salary
 from employees
 where salary >= 12000;
-2
+2 사원번호가 176 인 사람의 LAST_NAME 과 부서 번호를 조회한다.
 select last_name, department_id
 from employees
 where employee_id = 176;
-3
+3 연봉이 5000 에서 12000의 범위 이외인 사람들의 LAST_NAME 및 연봉을 조회한다
 select last_name, salary
 from employees
 where salary >= 5000 and salary <=12000;
-4
+4 2002/02/20 일부터 2008/05/01 사이에 고용된 사원들의 LAST_NAME, 사번, 고용일자를 조회한다.
 select last_name,employee_id,hire_date
 from employees
 where hire_date >= '2002/02/20' and hire_date <= '2008/05/01';
-5
+5 20 번 및 50 번 부서에서 근무하는 모든 사원들의 LAST_NAME 및 부서 번호를  조회한다. 단, LAST_NAME의 알파벳순
 select last_name, department_id
 from employees
 where department_id = 20 or department_id = 50 order by last_name asc;
-6
+6 20 번 및 50 번 부서에 근무하며, 연봉이 5000 ~ 12,000 사이인 사원들의 LAST_NAME 및 연봉을 조회한다.
 select last_name, salary
 from employees
 where department_id in(20,50) and salary between 5000 and 12000;
-7
+7 2004년도에 고용된 모든 사람들의 LAST_NAME 및 고용일을 조회한다
 select last_name, hire_date
 from employees
 where hire_date like '04%';
