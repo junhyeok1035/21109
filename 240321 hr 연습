@@ -1,0 +1,42 @@
+8-1 매니저가 없는 사람들의 last_name 및 job_id 를 조회한다.
+select last_name, job_id
+from employees
+where manager_id is null or manager_id = '';
+8-2 매니저가 있는 사람들의 last_name 및 job_id 를 조회한다.
+select last_name, job_id
+from employees
+where manager_id is not null or manager_id != '';
+9 커미션을 버는 모든 사원들의 last_name, 연봉 및 커미션을 조회한다.
+-- 연봉 역순, 커미션 역순차로 정렬한다.
+select last_name,salary,commission_pct
+from employees
+where not(commission_pct is null) order by salary desc, commission_pct desc;
+10 last_name의 네번째 글자가 a인 사원들의 last_name을 조회한다.
+select last_name
+from employees
+where last_name like '___a%';
+11 last_name에 a 및(or) e글자가 있는 사원들의 last_name을 조회한다.
+select last_name
+from employees
+where last_name like '%a%' or last_name like '%e%';
+12 연봉이 2,500, 3,500, 7000 이 아니며 직업이 SA_REP 이나 ST_CLERK 인 사람들을 조회한다.
+select last_name,salary,job_id
+from employees
+where SALARY NOT IN ( 2500, 3500, 7000 ) AND JOB_ID IN ( 'SA_REP', 'ST_CLERK' );
+13 직업이 AD_PRESS 인 사람은 A 등급을, ST_MAN 인 사람은 B 등급을, IT_PROG 인 사람은 C 등급을,
+SA_REP 인 사람은 D 등급을, ST_CLERK 인 사람은 E 등급을 기타는 0 을 부여하여 조회한다.
+(employee_id, first_name,last_name,geade)
+select employee_id, first_name,last_name,
+decode(job_id,'ad_pres','a','st_man','b','it_men','c','sa_rep','d','st_clerk','e','0') as grade
+from employees;
+13-1 DECODE 함수를 이용하시오.
+(조건의 대상이 되는 컬럼명,조건1,1에 부합될 때 출력내용, 조건2, 조건2에 부합될 때 출력값,.....,어떤 조건에도 맞지 않을때의 출력값) AS 별칭
+13-2 CASE문 이용하시오.
+case 조건의 대상이 되는 컬럼명 when 조건1 then 조건1이 참일 때 결과
+						 when 조건2 then 조건2이 참일 때 결과...
+						 else 어떤 조건에도 맞디 않을 때의 출력값
+						 end as 별칭
+select employee_id,first_name,last_name,
+CASE JOB_ID WHEN 'AD_PRESS' THEN 'A' WHEN 'ST_MAN' THEN 'B' WHEN 'IT_PROG' THEN 'C' 
+WHEN 'SA_REP' THEN 'D' WHEN 'ST_CLERK' THEN 'E' ELSE '0' END GRADE
+FROM EMPLOYEES;
