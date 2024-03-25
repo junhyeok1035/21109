@@ -1,0 +1,29 @@
+*** group by ***
+select 조회하고자 하는 컬럼명 . . . 연산식, 함수식 . . .
+from  . . .
+where . . .
+group by (select 절에서 조회하고자 했던 컬럼명들)
+-부서별로 평균 급여를 구하여라.
+(부서이름, 평균급여를 화면 출력)
+1) 부서이름과 모든 급여 정보를 조회
+select D.department_name, E.salary
+from employees E, departments D
+where E.department_id = D.department_id
+2)부서별 평균급여
+select D.department_name ,avg(E.salary)
+from employees E,departments D
+where E.department_id = D.department_id
+group by D.department_name;
+3)부서별, 직책별 평균급여
+select avg(E.salary) , D.department_name , E.job_id
+from departments D,employees E
+where D.department_id = E.department_id
+group by D.department_name,E.job_id;
+
+-having(group by 에서 사용되는 조건절)
+4) 부서별, 직책별 평균 급여 중 2000 이상인 정보(부서명,직책명,평균급여)만 조회하시오.
+select avg(E.salary) , D.department_name , E.job_id
+from departments D,employees E
+where D.department_id = E.department_id 
+group by D.department_name,E.job_id
+having avg(E.salary)>=6000;
