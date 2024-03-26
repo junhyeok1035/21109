@@ -31,13 +31,15 @@ from employees
 where salary > (select salary from employees where last_name = 'Popp');
 19 부서번호가 100인 부서에 속한 사원 중 전체 사원의 평균급여보다 높은 급여를 받는 사원의 last_name,급여,소속부서명을 조회하시오.
 (조건문에 서브쿼리 이용)
-select last_name, salary, department_name
-from employees E, department D
+select E.last_name, E.salary, D.department_name
+from employees E, departments D
 where E.department_id = D.department_id 
 and E.department_id = 100
 and E.salary > (select AVG(salary) from employees);
 20 각 부서별 최고 급여(조건문에서 서브쿼리로 조회)를 받는 사람의 last_name,급여,소속부서명을 조회하시오.
-select last_name,salary,department_name
-from employees E, department D
-where E.department_id = D.department_id
-and (select max(salary) from departments group by department_id);
+SELECT E.LAST_NAME, E.SALARY, D.DEPARTMENT_NAME
+FROM EMPLOYEES E , DEPARTMENTS D
+WHERE  E.DEPARTMENT_ID = D.DEPARTMENT_ID
+AND (D.department_id, E.salary) IN 
+(select department_id , max(salary) from employees group by department_id);
+
