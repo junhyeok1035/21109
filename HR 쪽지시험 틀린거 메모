@@ -1,0 +1,36 @@
+* 직업이 AD_PRES 인 사람은 A 등급을,
+ST_MAN 인 사람은 B 등급을,
+IT_PROG 인 사람은 C 등급을,
+SA_REP 인 사람은 D 등급을,
+ST_CLERK 인 사람은 E 등급을
+기타는 0 을 부여하여 조회한다.
+(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, GRADE) 
+1. CASE 문
+select employee_id,first_name,last_name, case job_id when 'AD_PRESS' THEN 'A' WHEN 'ST_MAN' THEN 'B' WHEN 'SA_REP' THEN 'C' WHEN 'ST_CLERK' THEN 'E' ELSE '0' END GRADE
+FROM EMPLOYEES;
+
+4. 부서번호가 100인 부서에 속한 사원 중 전체 사원의 평균급여보다 높은 급여를 받는
+사원의 LAST_NAME, 급여, 소속부서명을 조회하시오. (조건문에 서브쿼리 이용)
+
+select E.last_name, E.salary, D.department_name
+from employees E, departments D
+where E.department_id = D.department_id 
+and E.department_id = 100
+and E.salary > (select AVG(salary) from employees);
+
+5.부서별, 직책별 ,평균 급여 중 6000 이상인 정보(부서명, 직책명, 평균급여)만 조회하시오
+
+select department_name, job_id, AVG(salary)
+from employees E, departments D
+where E.department_id = D.department_id
+having AVG(salary) >= 6000
+group by department_name, job_id;
+
+6.각부서별 최고 급여(조건문에서 서브쿼리로 조회)를 받는 사람의 LAST_NAME, 급여, 소속부서명을 조회하시오.
+
+select E.last_name, E.salary, D.department_name
+from employees E, departments D
+where E.department_id = D.department_id
+and (D.department_id, E.salary) in (select department_id, MAX(salary)
+from employees
+group by department_id);
