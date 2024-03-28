@@ -1,0 +1,61 @@
+보너스) 매니저의 사번 및 그 매니저 밑 사원들 중 최대 연봉을 받는 사원의 연봉을 조회한다.
+화면출력 : 매니저 사번, 사원번호, 최대연봉
+select manager_id, salary, employee_id
+from employees
+where manager_id is not null and (salary,manager_id)
+in (select max(salary),manager_id from employees group by manager_id);
+보너스 2) 매니저의 사번 및 그 매니저 밑 사원들 중 최대 연봉을 받는 사원의 연봉을 조회한다.\
+단, 연봉이 10000 이하인 사원 중 최대 연봉
+화면출력: 매니저 사번, 사원번호, 최대연봉
+select manager_id, salary, employee_id
+from employees
+where manager_id is not null
+and (salary, manager_id) in (select max(salary),manager_id from employees
+where salary <= 10000
+group by manager_id);
+보너스 3) 매니저의 사번 및 그 매니저 밑 사원들 중 최대 연봉을 받는 사원의 연봉을 조회한다.
+단, 최대연봉이 10000이하인 경우에만 출력
+화면출력: 매니저 사번, 사원번호, 최대연봉
+select manager_id, salary, employee_id
+from employees
+where manager_id is not null
+and (salary, manager_id) in (select max(salary),manager_id from employees 
+group by manager_id 
+having max(salary) <= 10000);
+보너스 4) 매니저의 사번 및 그 매니저 밑 사원들 중 최대 연봉을 받는 사원의 연봉을 조회한다.
+화면출력 : 매니저 사번, 사원번호, 부서명, 최대연봉
+select E.manager_id, E.salary, E.employee_id
+from employees E, departments D
+where E.department_id = D.department_id
+and (E.salary, E.manager_id) in (select max(salary),manager_id from employees 
+where manager_id is not null
+group by manager_id);
+과정 1) 매니저별 최대 연봉을 구해놓는다
+select manager_id, max(salary) from employees where manager_id is not null
+group by manager_id
+과정 2) 사원의 매니저번호와 연봉정보가 과정1)과 일치하는 사원정보를 출력한다
+select E.manager_id E.employee_id, D.department_name, E.salary . . .
+where (E.manager_id, E.salary) in (과정1)
+과정 3) 부서명을 출력하기 위해 내부조인을 체결한다
+from employees E, departments D
+where E.department_id = D.department_id
+33.부서명, 위치 id, 각 부서 별 사원 총 수, 각 부서 별 평균 연봉을 조회한다.
+-- 평균 연봉은 소수점 2자리 까지만 표현한다
+select department_name, location_id, count(E.employee_id), round(avg(E.salary),2)
+from employees E , departments D
+where E.department_id = D.department_id
+group by D.department_name, D.location_id;
+33-1 부서 명, 지역 명, 각 부서 별 사원 총 수, 각 부서별 평균 연봉을 조회한다.
+select D.department_name as 부서명, L.city as 지역명,
+count(*) as 사원총수, round(avg(E,salary),2) as 평균연봉
+from employees E, departments D, locations L
+where E.department_id = D.department_id and D.location_id = L.location_id
+group by D.department_name, L.city;
+34 총 사원 수 및 2005,2006,2007,2008년도 별 고용된 사원들의 총 수를 조회한다
+select distinct
+	(select count(employee_id) from employees) as 총사원
+,	(select count(employee_id) from employees where hire_date like '05%') as "2005년"
+,	(select count(employee_id) from employees where hire_date like '06%') as "2006년"
+,	(select count(employee_id) from employees where hire_date like '07%') as "2007년"
+,	(select count(employee_id) from employees where hire_date like '08%') as "2008년"
+from employees;
